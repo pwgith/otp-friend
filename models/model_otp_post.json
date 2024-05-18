@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "properties": {
+      
+        "otp_key" : {"type": "string", "minLength": 1},
+        "otp_data" : {"type": "string", "minLength": 1}
+    },
+  
+    "required": ["otp_key", 
+                "otp_data"]
+}

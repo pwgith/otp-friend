@@ -1,0 +1,1 @@
+serverless config credentials -p aws -k ${AWS_ACCESS_KEY_ID} -s ${AWS_SECRET_ACCESS_KEY}

@@ -127,5 +127,3 @@ custom:
     hooks:
       'deploy:finalize': karate/refresh_urls.sh
 
-plugins:
-  - serverless-plugin-scripts
