@@ -6,6 +6,7 @@ os.environ["PYTHONPATH"] = os.environ["PYTHONPATH"] + ":" + src_path
 import json
 import logging
 from otp_manager import OTPManager
+from otp_exceptions import OTPDataNotFound
 
 def is_valid_json(json_string):
     """Check if the json string is acutally valid json"""
@@ -15,7 +16,7 @@ def is_valid_json(json_string):
     except ValueError:
         return False
 
-def save_otp(event, context):
+def store_otp(event, context):
     """Process a request for otp"""
     print("Event:", event)
     if type(event) is not dict:
@@ -41,4 +42,22 @@ def save_otp(event, context):
     except Exception as e:
         logging.exception("Error savibg OTP %s", str(e))        
         return {'statusCode': 500, 'body': 'Was unable to save OTP in the database: ' + e.__str__()}
+
+def retrieve_otp(event, context):
+    """Process a request for test data"""
+    if type(event) is not dict:
+        return {'statusCode': 400, 'body': 'Event parameter is not a hash'}
+    otp_key = event['pathParameters']['otp_key']
+
+    try:
+        otpManager = OTPManager()
+        otp_data = otpManager.get_otp(otp_key)
+        return_body = {'otp_key' : otp_key, 'otp_data' : otp_data }
+        return_body_json = json.dumps(return_body, cls=DecimalEncoder)
+        return {'statusCode': 200, 'body': return_body_json}
+    except OTPDataNotFound as e:
+        return {'statusCode': 404, 'body': e.__str__()}
+    except Exception as e:
+        logging.exception("Error getting request %s", str(e))        
+        return {'statusCode': 500, 'body': 'Was unable to store data in the database: ' + e.__str__()}
 

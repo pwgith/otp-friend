@@ -1,0 +1,131 @@
+service: td-central
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: ap-southeast-2
+        
+resources:
+  Resources:
+    tdRequestTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: "otpStore"
+        TimeToLiveSpecification:
+          AttributeName: expiration_timestamp
+          Enabled: true
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: "otp_key"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "otp_key"
+            KeyType: "HASH"
+    TDLambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: td-lambda-role
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: td-lambda-policy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - dynamodb:PutItem
+                    - dynamodb:GetItem
+                    - dynamodb:UpdateItem
+                    - dynamodb:DeleteItem
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                  Resource: 
+                    - Fn::GetAtt:
+                        - otpStore
+                        - Arn
+                    - Fn::Join:
+                      - "/"
+                      -
+                        - { "Fn::GetAtt": ["otpStore", "Arn" ] }
+                        - "index/*"
+                - Effect: "Allow"
+                  Action: 
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "arn:aws:logs:*:*:*" 
+    ConsumerUser:
+      Type: AWS::IAM::User
+      Properties:
+        UserName: td-consumer-user
+        Policies:
+          - PolicyName: td-consumer-policy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - apigateway:Invoke
+                    - apigateway:POST
+                    - apigateway:GET
+                  Resource: 
+                      Fn::Join:
+                      - ""
+                      - 
+                        - "arn:aws:execute-api:"
+                        - Ref: "AWS::Region"
+                        - ":"
+                        - Ref: "AWS::AccountId"
+                        - ":"
+                        - Ref: "ApiGatewayRestApi"
+                        - "/*"
+                - Effect: "Allow"
+                  Action: 
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "arn:aws:logs:*:*:*" 
+functions:
+  otp-store-lambda:
+    handler: otp_handler.store_otp
+    environment:
+      PYTHONPATH: "./src"
+    events:
+      - http:
+          path: otp
+          method: post
+          request:
+            schemas:
+              application/json: ${file(models/model_otp_post.json)}
+
+    role: TDLambdaRole
+  otp-get-lambda:
+    handler: otp_handler.retrieve_otp
+    environment:
+      PYTHONPATH: "./src"
+    events:
+      - http:
+          path: otp/{otp_key}
+          method: get
+    role: TDLambdaRole
+
+
+package:
+  patterns:
+    - '!test/**'
+    - '!target/**'
+    - '!.vscode/**'
+
+custom:
+  scripts:
+    hooks:
+      'deploy:finalize': karate/refresh_urls.sh
+
+plugins:
+  - serverless-plugin-scripts
