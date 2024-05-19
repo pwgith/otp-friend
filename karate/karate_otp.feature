@@ -30,7 +30,7 @@ Scenario: Basic operations - post and get
     """
 
 
-Scenario: update - post and get
+Scenario: update - post twice and confirm updated
   Given url otp_post_url
     And request  
     """
@@ -64,3 +64,10 @@ Scenario: update - post and get
       "otp_data": "data2" 
     }
     """
+
+Scenario: OTP not found
+  Given url otp_get_url
+    And path "key1xxxx"
+    When method GET
+    Then status 404  
+    And match response == '"OTP Key: <key1xxxx> was not found"'

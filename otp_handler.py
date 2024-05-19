@@ -111,7 +111,8 @@ def get_otp(event, context):
         return_body_json = json.dumps(return_body, cls=DecimalEncoder)
         return {'statusCode': 200, 'body': return_body_json}
     except OTPDataNotFound as e:
-        return {'statusCode': 404, 'body': json.dumps(e.__str__(), cls=DecimalEncoder)}
+        reponse = "OTP Key: <"+ otp_key + "> was not found"
+        return {'statusCode': 404, 'body': json.dumps(reponse, cls=DecimalEncoder)}
     except Exception as e:
         logging.exception("Error getting request %s", str(e))        
         return {'statusCode': 500, 'body': json.dumps('Was unable to complete this get: ' + e.__str__(), cls=DecimalEncoder)}
