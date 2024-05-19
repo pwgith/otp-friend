@@ -108,7 +108,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716110876164-2024-05-19T09:27:56.164Z/otp-friend.zip"
               },
               "Handler": "otp_handler.save_otp",
               "Runtime": "python3.9",
@@ -139,7 +139,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716110876164-2024-05-19T09:27:56.164Z/otp-friend.zip"
               },
               "Handler": "otp_handler.save_otp_okta",
               "Runtime": "python3.9",
@@ -170,7 +170,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716110876164-2024-05-19T09:27:56.164Z/otp-friend.zip"
               },
               "Handler": "otp_handler.get_otp",
               "Runtime": "python3.9",
@@ -194,34 +194,34 @@
               "OTPLambdaRole"
             ]
           },
-          "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4": {
+          "OtpDashstoreDashlambdaLambdaVersionlhvt8jOtTDz5mZO5CSJ1AxJ4DaiVOaTiyFf4HZSn18": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashlambdaLambdaFunction"
               },
-              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
+              "CodeSha256": "FPicNwy+ZXqFGb27cNIpW9/I4HwEUhHT0l6WN2ByupY="
             }
           },
-          "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM": {
+          "OtpDashstoreDashoktaDashlambdaLambdaVersionPx0OPgdRLgOitLfj3Xu9Tw0oCEkhDFxxYRtzI9xUhU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashoktaDashlambdaLambdaFunction"
               },
-              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
+              "CodeSha256": "FPicNwy+ZXqFGb27cNIpW9/I4HwEUhHT0l6WN2ByupY="
             }
           },
-          "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc": {
+          "OtpDashgetDashlambdaLambdaVersionEi33lwnmfFt2R8r4etFL9CCCeAnOuxrADmMPTD8Wd2Q": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashgetDashlambdaLambdaFunction"
               },
-              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
+              "CodeSha256": "FPicNwy+ZXqFGb27cNIpW9/I4HwEUhHT0l6WN2ByupY="
             }
           },
           "ApiGatewayRestApi": {
@@ -478,24 +478,39 @@
               "ContentType": "application/json",
               "Schema": {
                 "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
                 "properties": {
-                  "otp_key": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "otp_data": {
-                    "type": "string",
-                    "minLength": 1
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "messageProfile": {
+                        "type": "object",
+                        "properties": {
+                          "phoneNumber": {
+                            "type": "string"
+                          },
+                          "otpCode": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "phoneNumber",
+                          "otpCode"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "messageProfile"
+                    ]
                   }
                 },
                 "required": [
-                  "otp_key",
-                  "otp_data"
+                  "data"
                 ]
               }
             }
           },
-          "ApiGatewayDeployment1716105607452": {
+          "ApiGatewayDeployment1716110871751": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -779,7 +794,7 @@
           "OtpDashstoreDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4"
+              "Ref": "OtpDashstoreDashlambdaLambdaVersionlhvt8jOtTDz5mZO5CSJ1AxJ4DaiVOaTiyFf4HZSn18"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
@@ -788,7 +803,7 @@
           "OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM"
+              "Ref": "OtpDashstoreDashoktaDashlambdaLambdaVersionPx0OPgdRLgOitLfj3Xu9Tw0oCEkhDFxxYRtzI9xUhU"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn"
@@ -797,7 +812,7 @@
           "OtpDashgetDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc"
+              "Ref": "OtpDashgetDashlambdaLambdaVersionEi33lwnmfFt2R8r4etFL9CCCeAnOuxrADmMPTD8Wd2Q"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"
@@ -955,7 +970,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4"
+        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionlhvt8jOtTDz5mZO5CSJ1AxJ4DaiVOaTiyFf4HZSn18"
       },
       "otp-store-okta-lambda": {
         "handler": "otp_handler.save_otp_okta",
@@ -985,7 +1000,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM"
+        "versionLogicalId": "OtpDashstoreDashoktaDashlambdaLambdaVersionPx0OPgdRLgOitLfj3Xu9Tw0oCEkhDFxxYRtzI9xUhU"
       },
       "otp-get-lambda": {
         "handler": "otp_handler.get_otp",
@@ -1008,7 +1023,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc"
+        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionEi33lwnmfFt2R8r4etFL9CCCeAnOuxrADmMPTD8Wd2Q"
       }
     },
     "resources": {
@@ -1183,7 +1198,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/otp-friend/dev/code-artifacts",
         "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip",
-        "artifactDirectoryName": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z"
+        "artifactDirectoryName": "serverless/otp-friend/dev/1716110876164-2024-05-19T09:27:56.164Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
@@ -1197,7 +1212,7 @@
     "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z",
+    "artifactDirectoryName": "serverless/otp-friend/dev/1716110876164-2024-05-19T09:27:56.164Z",
     "artifact": "otp-friend.zip"
   }
 }

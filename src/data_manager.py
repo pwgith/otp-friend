@@ -13,8 +13,6 @@ class DataManager:
         table = self.dynamodb_resource.Table('otpStore')
         query_key = {'otp_key': otp_key}
         response = table.get_item(Key=query_key)
-        print ("get data response: ", response)
-        # Todo need a none data error here
         if "Item" in response:
             item = response.get('Item')
             otp_key = item["otp_data"]
@@ -24,5 +22,4 @@ class DataManager:
     def store_otp_data(self, otp_data):
         table = self.dynamodb_resource.Table('otpStore')
         result = table.put_item(Item=otp_data)
-        print ("store data result: ", result)
         return result

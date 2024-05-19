@@ -60,11 +60,27 @@ def save_otp_okta(event, context):
     if "requestContext" not in event or "requestId" not in event["requestContext"]:
         return {'statusCode': 400, 'body': 'Event is missing Request Id'}
         
-    otp = message
+    otp = message["data"]["messageProfile"]
+
+    response = {
+        "commands":[
+            {
+                "type":"com.okta.telephony.action",
+                "value":[
+                    {
+                    "status":"SUCCESSFUL",
+                    "provider":"Yaknow",
+                    "transactionId":"SM49a8ece2822d44e4adaccd7ed268f954",
+                    "transactionMetadata":"Duration=300ms"
+                    }
+                ]
+            }
+        ]
+    }
     try:
         otpManager = OTPManager()
-        result = otpManager.save_otp(otp["otp_key"], otp["otp_data"])
-        return {'statusCode': 200, 'body': json.dumps("OTP has been saved", cls=DecimalEncoder)}
+        otpManager.save_otp(otp["phoneNumber"], otp["otpCode"])
+        return {'statusCode': 200, 'body': json.dumps(response, cls=DecimalEncoder)}
     except Exception as e:
         logging.exception("Error savibg OTP %s", str(e))        
         return {'statusCode': 500, 'body': json.dumps('Was unable to save OTP in the database: ' + e.__str__(), cls=DecimalEncoder)}

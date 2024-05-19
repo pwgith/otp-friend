@@ -18,6 +18,20 @@ Scenario: Basic operations - post and get
     Then status 200
 
   Given url otp_get_url
+    And path "key1"
+    When method GET
+    Then status 200  
+    And match response == 
+    """
+    {
+      "otp_key": "key1", 
+      "otp_data": "data1" 
+    }
+    """
+
+
+Scenario: update - post and get
+  Given url otp_post_url
     And request  
     """
     {
@@ -26,4 +40,27 @@ Scenario: Basic operations - post and get
     }
     """
     When method POST
-    Then status 200    
+    Then status 200
+
+  Given url otp_post_url
+    And request  
+    """
+    {
+      "otp_key": "key1",
+      "otp_data": "data2" 
+    }
+    """
+    When method POST
+    Then status 200
+
+  Given url otp_get_url
+    And path "key1"
+    When method GET
+    Then status 200  
+    And match response == 
+    """
+    {
+      "otp_key": "key1", 
+      "otp_data": "data2" 
+    }
+    """
