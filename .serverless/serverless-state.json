@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "td-central",
+    "service": "otp-friend",
     "serviceObject": {
-      "name": "td-central"
+      "name": "otp-friend"
     },
     "provider": {
       "name": "aws",
@@ -86,13 +86,13 @@
           "OtpDashstoreDashlambdaLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/td-central-dev-otp-store-lambda"
+              "LogGroupName": "/aws/lambda/otp-friend-dev-otp-store-lambda"
             }
           },
           "OtpDashgetDashlambdaLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/td-central-dev-otp-get-lambda"
+              "LogGroupName": "/aws/lambda/otp-friend-dev-otp-get-lambda"
             }
           },
           "OtpDashstoreDashlambdaLambdaFunction": {
@@ -102,11 +102,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/td-central/dev/1716068860581-2024-05-18T21:47:40.581Z/td-central.zip"
+                "S3Key": "serverless/otp-friend/dev/1716071954643-2024-05-18T22:39:14.643Z/otp-friend.zip"
               },
               "Handler": "otp_handler.store_otp",
               "Runtime": "python3.9",
-              "FunctionName": "td-central-dev-otp-store-lambda",
+              "FunctionName": "otp-friend-dev-otp-store-lambda",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -116,14 +116,14 @@
               },
               "Role": {
                 "Fn::GetAtt": [
-                  "TDLambdaRole",
+                  "OTPLambdaRole",
                   "Arn"
                 ]
               }
             },
             "DependsOn": [
               "OtpDashstoreDashlambdaLogGroup",
-              "TDLambdaRole"
+              "OTPLambdaRole"
             ]
           },
           "OtpDashgetDashlambdaLambdaFunction": {
@@ -133,11 +133,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/td-central/dev/1716068860581-2024-05-18T21:47:40.581Z/td-central.zip"
+                "S3Key": "serverless/otp-friend/dev/1716071954643-2024-05-18T22:39:14.643Z/otp-friend.zip"
               },
               "Handler": "otp_handler.retrieve_otp",
               "Runtime": "python3.9",
-              "FunctionName": "td-central-dev-otp-get-lambda",
+              "FunctionName": "otp-friend-dev-otp-get-lambda",
               "MemorySize": 1024,
               "Timeout": 6,
               "Environment": {
@@ -147,40 +147,40 @@
               },
               "Role": {
                 "Fn::GetAtt": [
-                  "TDLambdaRole",
+                  "OTPLambdaRole",
                   "Arn"
                 ]
               }
             },
             "DependsOn": [
               "OtpDashgetDashlambdaLogGroup",
-              "TDLambdaRole"
+              "OTPLambdaRole"
             ]
           },
-          "OtpDashstoreDashlambdaLambdaVersionYkhtCcqrZGBDDVksX5KZkd0d3E0TleN4a1zJRrGgY": {
+          "OtpDashstoreDashlambdaLambdaVersionYj6R4TwTC4r1JDmMYNcvMiXBDyOAEkcHfqpHJOSwFY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashlambdaLambdaFunction"
               },
-              "CodeSha256": "QfaBc63YBZQr1K6PjxEGGnABUFASY9nbjmg3UQ8LH+E="
+              "CodeSha256": "CXsncbbGYajtxh3BGlo8KwxWetiCPKP/cUevnmJhj6Q="
             }
           },
-          "OtpDashgetDashlambdaLambdaVersionP4v1XcReJRLrcNa6nlBQsUF7CS3kCO7Gx9u30IY5g": {
+          "OtpDashgetDashlambdaLambdaVersionZYZYY1J2lJXrFHomDHrd4F3RsMa1BRU6gh4E7yWvYkU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashgetDashlambdaLambdaFunction"
               },
-              "CodeSha256": "QfaBc63YBZQr1K6PjxEGGnABUFASY9nbjmg3UQ8LH+E="
+              "CodeSha256": "CXsncbbGYajtxh3BGlo8KwxWetiCPKP/cUevnmJhj6Q="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-td-central",
+              "Name": "dev-otp-friend",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -199,18 +199,6 @@
                 ]
               },
               "PathPart": "otp",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayResourceOtpOtpkeyVar": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Ref": "ApiGatewayResourceOtp"
-              },
-              "PathPart": "{otp_key}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -258,7 +246,7 @@
               },
               "MethodResponses": [],
               "RequestValidatorId": {
-                "Ref": "ApiGatewayTdcentralRequestValidator"
+                "Ref": "ApiGatewayOtpfriendRequestValidator"
               },
               "RequestModels": {
                 "application/json": {
@@ -270,13 +258,13 @@
               "OtpDashstoreDashlambdaLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayMethodOtpOtpkeyVarGet": {
+          "ApiGatewayMethodOtpGet": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceOtpOtpkeyVar"
+                "Ref": "ApiGatewayResourceOtp"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -316,7 +304,7 @@
               "OtpDashgetDashlambdaLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayTdcentralRequestValidator": {
+          "ApiGatewayOtpfriendRequestValidator": {
             "Type": "AWS::ApiGateway::RequestValidator",
             "Properties": {
               "RestApiId": {
@@ -324,7 +312,7 @@
               },
               "ValidateRequestBody": true,
               "ValidateRequestParameters": true,
-              "Name": "td-central-dev | Validate request body and querystring parameters"
+              "Name": "otp-friend-dev | Validate request body and querystring parameters"
             }
           },
           "ApiGatewayMethodOtpPostApplicationJsonModel": {
@@ -353,7 +341,7 @@
               }
             }
           },
-          "ApiGatewayDeployment1716068857260": {
+          "ApiGatewayDeployment1716071953445": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -363,7 +351,7 @@
             },
             "DependsOn": [
               "ApiGatewayMethodOtpPost",
-              "ApiGatewayMethodOtpOtpkeyVarGet"
+              "ApiGatewayMethodOtpGet"
             ]
           },
           "OtpDashstoreDashlambdaLambdaPermissionApiGateway": {
@@ -440,7 +428,7 @@
               }
             }
           },
-          "tdRequestTable": {
+          "otpStoreTableResource": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
               "TableName": "otpStore",
@@ -463,10 +451,10 @@
               ]
             }
           },
-          "TDLambdaRole": {
+          "OTPLambdaRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
-              "RoleName": "td-lambda-role",
+              "RoleName": "otp-lambda-role",
               "AssumeRolePolicyDocument": {
                 "Version": "2012-10-17",
                 "Statement": [
@@ -481,7 +469,7 @@
               },
               "Policies": [
                 {
-                  "PolicyName": "td-lambda-policy",
+                  "PolicyName": "otp-lambda-policy",
                   "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -498,7 +486,7 @@
                         "Resource": [
                           {
                             "Fn::GetAtt": [
-                              "otpStore",
+                              "otpStoreTableResource",
                               "Arn"
                             ]
                           },
@@ -508,7 +496,7 @@
                               [
                                 {
                                   "Fn::GetAtt": [
-                                    "otpStore",
+                                    "otpStoreTableResource",
                                     "Arn"
                                   ]
                                 },
@@ -536,10 +524,10 @@
           "ConsumerUser": {
             "Type": "AWS::IAM::User",
             "Properties": {
-              "UserName": "td-consumer-user",
+              "UserName": "otp-consumer-user",
               "Policies": [
                 {
-                  "PolicyName": "td-consumer-policy",
+                  "PolicyName": "otp-consumer-policy",
                   "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -593,25 +581,25 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-td-central-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-otp-friend-dev-ServerlessDeploymentBucketName"
             }
           },
           "OtpDashstoreDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashlambdaLambdaVersionYkhtCcqrZGBDDVksX5KZkd0d3E0TleN4a1zJRrGgY"
+              "Ref": "OtpDashstoreDashlambdaLambdaVersionYj6R4TwTC4r1JDmMYNcvMiXBDyOAEkcHfqpHJOSwFY"
             },
             "Export": {
-              "Name": "sls-td-central-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
+              "Name": "sls-otp-friend-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
             }
           },
           "OtpDashgetDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashgetDashlambdaLambdaVersionP4v1XcReJRLrcNa6nlBQsUF7CS3kCO7Gx9u30IY5g"
+              "Ref": "OtpDashgetDashlambdaLambdaVersionZYZYY1J2lJXrFHomDHrd4F3RsMa1BRU6gh4E7yWvYkU"
             },
             "Export": {
-              "Name": "sls-td-central-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"
+              "Name": "sls-otp-friend-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -637,7 +625,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-td-central-dev-ServiceEndpoint"
+              "Name": "sls-otp-friend-dev-ServiceEndpoint"
             }
           }
         }
@@ -756,14 +744,14 @@
             }
           }
         ],
-        "role": "TDLambdaRole",
-        "name": "td-central-dev-otp-store-lambda",
+        "role": "OTPLambdaRole",
+        "name": "otp-friend-dev-otp-store-lambda",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionYkhtCcqrZGBDDVksX5KZkd0d3E0TleN4a1zJRrGgY"
+        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionYj6R4TwTC4r1JDmMYNcvMiXBDyOAEkcHfqpHJOSwFY"
       },
       "otp-get-lambda": {
         "handler": "otp_handler.retrieve_otp",
@@ -773,25 +761,25 @@
         "events": [
           {
             "http": {
-              "path": "otp/{otp_key}",
+              "path": "otp",
               "method": "get",
               "integration": "AWS_PROXY"
             }
           }
         ],
-        "role": "TDLambdaRole",
-        "name": "td-central-dev-otp-get-lambda",
+        "role": "OTPLambdaRole",
+        "name": "otp-friend-dev-otp-get-lambda",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionP4v1XcReJRLrcNa6nlBQsUF7CS3kCO7Gx9u30IY5g"
+        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionZYZYY1J2lJXrFHomDHrd4F3RsMa1BRU6gh4E7yWvYkU"
       }
     },
     "resources": {
       "Resources": {
-        "tdRequestTable": {
+        "otpStoreTableResource": {
           "Type": "AWS::DynamoDB::Table",
           "Properties": {
             "TableName": "otpStore",
@@ -814,10 +802,10 @@
             ]
           }
         },
-        "TDLambdaRole": {
+        "OTPLambdaRole": {
           "Type": "AWS::IAM::Role",
           "Properties": {
-            "RoleName": "td-lambda-role",
+            "RoleName": "otp-lambda-role",
             "AssumeRolePolicyDocument": {
               "Version": "2012-10-17",
               "Statement": [
@@ -832,7 +820,7 @@
             },
             "Policies": [
               {
-                "PolicyName": "td-lambda-policy",
+                "PolicyName": "otp-lambda-policy",
                 "PolicyDocument": {
                   "Version": "2012-10-17",
                   "Statement": [
@@ -849,7 +837,7 @@
                       "Resource": [
                         {
                           "Fn::GetAtt": [
-                            "otpStore",
+                            "otpStoreTableResource",
                             "Arn"
                           ]
                         },
@@ -859,7 +847,7 @@
                             [
                               {
                                 "Fn::GetAtt": [
-                                  "otpStore",
+                                  "otpStoreTableResource",
                                   "Arn"
                                 ]
                               },
@@ -887,10 +875,10 @@
         "ConsumerUser": {
           "Type": "AWS::IAM::User",
           "Properties": {
-            "UserName": "td-consumer-user",
+            "UserName": "otp-consumer-user",
             "Policies": [
               {
-                "PolicyName": "td-consumer-policy",
+                "PolicyName": "otp-consumer-policy",
                 "PolicyDocument": {
                   "Version": "2012-10-17",
                   "Statement": [
@@ -943,7 +931,7 @@
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "initialServerlessConfig": {
-      "service": "td-central",
+      "service": "otp-friend",
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
@@ -959,9 +947,9 @@
           "!target/**",
           "!.vscode/**"
         ],
-        "artifactsS3KeyDirname": "serverless/td-central/dev/code-artifacts",
-        "artifact": "/workspaces/otp-friend/.serverless/td-central.zip",
-        "artifactDirectoryName": "serverless/td-central/dev/1716068860581-2024-05-18T21:47:40.581Z"
+        "artifactsS3KeyDirname": "serverless/otp-friend/dev/code-artifacts",
+        "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip",
+        "artifactDirectoryName": "serverless/otp-friend/dev/1716071954643-2024-05-18T22:39:14.643Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
@@ -969,10 +957,10 @@
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/workspaces/otp-friend/.serverless/td-central.zip"
+    "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/td-central/dev/1716068860581-2024-05-18T21:47:40.581Z",
-    "artifact": "td-central.zip"
+    "artifactDirectoryName": "serverless/otp-friend/dev/1716071954643-2024-05-18T22:39:14.643Z",
+    "artifact": "otp-friend.zip"
   }
 }

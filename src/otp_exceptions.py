@@ -3,7 +3,7 @@ import json
 class OTPException(Exception):
     pass
 
-class OTPInvalidDataElement(OTPException)
+class OTPInvalidDataElement(OTPException):
     def __init__(self, data_element):
         self.data_element = data_element
 

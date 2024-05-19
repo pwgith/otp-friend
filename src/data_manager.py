@@ -15,7 +15,6 @@ class DataManager:
         response = table.get_item(Key=query_key)
         # Todo need a none data error here
         item = response.get('Item')
-        print ("ITEM: ", item, response)
         otp_key = item["otp_data"]
         return otp_key
 

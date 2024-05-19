@@ -1,4 +1,4 @@
-service: td-central
+service: otp-friend
 
 provider:
   name: aws
@@ -7,7 +7,7 @@ provider:
         
 resources:
   Resources:
-    tdRequestTable:
+    otpStoreTableResource:
       Type: "AWS::DynamoDB::Table"
       Properties:
         TableName: "otpStore"
@@ -21,10 +21,10 @@ resources:
         KeySchema:
           - AttributeName: "otp_key"
             KeyType: "HASH"
-    TDLambdaRole:
+    OTPLambdaRole:
       Type: AWS::IAM::Role
       Properties:
-        RoleName: td-lambda-role
+        RoleName: otp-lambda-role
         AssumeRolePolicyDocument:
           Version: "2012-10-17"
           Statement:
@@ -33,7 +33,7 @@ resources:
                 Service: lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
-          - PolicyName: td-lambda-policy
+          - PolicyName: otp-lambda-policy
             PolicyDocument:
               Version: "2012-10-17"
               Statement:
@@ -47,12 +47,12 @@ resources:
                     - dynamodb:Scan
                   Resource: 
                     - Fn::GetAtt:
-                        - otpStore
+                        - otpStoreTableResource
                         - Arn
                     - Fn::Join:
                       - "/"
                       -
-                        - { "Fn::GetAtt": ["otpStore", "Arn" ] }
+                        - { "Fn::GetAtt": ["otpStoreTableResource", "Arn" ] }
                         - "index/*"
                 - Effect: "Allow"
                   Action: 
@@ -63,9 +63,9 @@ resources:
     ConsumerUser:
       Type: AWS::IAM::User
       Properties:
-        UserName: td-consumer-user
+        UserName: otp-consumer-user
         Policies:
-          - PolicyName: td-consumer-policy
+          - PolicyName: otp-consumer-policy
             PolicyDocument:
               Version: "2012-10-17"
               Statement:
@@ -104,16 +104,16 @@ functions:
             schemas:
               application/json: ${file(models/model_otp_post.json)}
 
-    role: TDLambdaRole
+    role: OTPLambdaRole
   otp-get-lambda:
     handler: otp_handler.retrieve_otp
     environment:
       PYTHONPATH: "./src"
     events:
       - http:
-          path: otp/{otp_key}
+          path: otp
           method: get
-    role: TDLambdaRole
+    role: OTPLambdaRole
 
 
 package:
