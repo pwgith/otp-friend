@@ -82,8 +82,20 @@ def save_otp_okta(event, context):
         otpManager.save_otp(otp["phoneNumber"], otp["otpCode"])
         return {'statusCode': 200, 'body': json.dumps(response, cls=DecimalEncoder)}
     except Exception as e:
-        logging.exception("Error savibg OTP %s", str(e))        
-        return {'statusCode': 500, 'body': json.dumps('Was unable to save OTP in the database: ' + e.__str__(), cls=DecimalEncoder)}
+        logging.exception("Error savibg OTP %s", str(e)) 
+        error_response = {
+            "error":{
+                "errorSummary":"Failed to deliver SMS OTP to Yaknow",
+                "errorCauses":[
+                    {
+                        "errorSummary": e.__str__(),
+                        "reason":"Unable to process",
+                        "location":"Australia"
+                    }
+                ]
+            }
+        }       
+        return {'statusCode': 500, 'body': json.dumps(error_response, cls=DecimalEncoder)}
 
 def get_otp(event, context):
     """Process a request for test data"""
