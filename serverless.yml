@@ -103,7 +103,6 @@ functions:
           request:
             schemas:
               application/json: ${file(models/model_otp_post.json)}
-
     role: OTPLambdaRole
   otp-get-lambda:
     handler: otp_handler.get_otp
@@ -111,7 +110,7 @@ functions:
       PYTHONPATH: "./src"
     events:
       - http:
-          path: otp
+          path: otp/{key}
           method: get
     role: OTPLambdaRole
 

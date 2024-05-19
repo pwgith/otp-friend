@@ -90,7 +90,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/otp-friend/dev/1716097185616-2024-05-19T05:39:45.616Z/otp-friend.zip"
+          "S3Key": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z/otp-friend.zip"
         },
         "Handler": "otp_handler.save_otp",
         "Runtime": "python3.9",
@@ -121,7 +121,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/otp-friend/dev/1716097185616-2024-05-19T05:39:45.616Z/otp-friend.zip"
+          "S3Key": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z/otp-friend.zip"
         },
         "Handler": "otp_handler.get_otp",
         "Runtime": "python3.9",
@@ -145,24 +145,24 @@
         "OTPLambdaRole"
       ]
     },
-    "OtpDashstoreDashlambdaLambdaVersion4M3v1DEqdvFf3yVoojzU0L494jeFnPWIYk0mxWs1WmU": {
+    "OtpDashstoreDashlambdaLambdaVersionqNB9JJy5ZTtS7Xz0EEQPPCEg2IkVRyJrP0GUdvp4aHU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "OtpDashstoreDashlambdaLambdaFunction"
         },
-        "CodeSha256": "VedD2F10bSM+lxZ5mLY5Bt7sgpxJjRdzS4qDpLH5aH0="
+        "CodeSha256": "/Hg7g7tR/1e+Od4tSBs2OdRoo81N5PzziYUxOtI7d1o="
       }
     },
-    "OtpDashgetDashlambdaLambdaVersionNMCM62sXgmACKtX28J66hUCgGqUvNbixnY48PPiG80": {
+    "OtpDashgetDashlambdaLambdaVersionMjquJ6tFcaquERA4kk0GeDzA840gyEGGq3DrWULLji8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "OtpDashgetDashlambdaLambdaFunction"
         },
-        "CodeSha256": "VedD2F10bSM+lxZ5mLY5Bt7sgpxJjRdzS4qDpLH5aH0="
+        "CodeSha256": "/Hg7g7tR/1e+Od4tSBs2OdRoo81N5PzziYUxOtI7d1o="
       }
     },
     "ApiGatewayRestApi": {
@@ -187,6 +187,18 @@
           ]
         },
         "PathPart": "otp",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceOtpKeyVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceOtp"
+        },
+        "PathPart": "{key}",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -246,13 +258,13 @@
         "OtpDashstoreDashlambdaLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodOtpGet": {
+    "ApiGatewayMethodOtpKeyVarGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceOtp"
+          "Ref": "ApiGatewayResourceOtpKeyVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -329,7 +341,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1716097184323": {
+    "ApiGatewayDeployment1716103521865": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -339,7 +351,7 @@
       },
       "DependsOn": [
         "ApiGatewayMethodOtpPost",
-        "ApiGatewayMethodOtpGet"
+        "ApiGatewayMethodOtpKeyVarGet"
       ]
     },
     "OtpDashstoreDashlambdaLambdaPermissionApiGateway": {
@@ -575,7 +587,7 @@
     "OtpDashstoreDashlambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "OtpDashstoreDashlambdaLambdaVersion4M3v1DEqdvFf3yVoojzU0L494jeFnPWIYk0mxWs1WmU"
+        "Ref": "OtpDashstoreDashlambdaLambdaVersionqNB9JJy5ZTtS7Xz0EEQPPCEg2IkVRyJrP0GUdvp4aHU"
       },
       "Export": {
         "Name": "sls-otp-friend-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
@@ -584,7 +596,7 @@
     "OtpDashgetDashlambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "OtpDashgetDashlambdaLambdaVersionNMCM62sXgmACKtX28J66hUCgGqUvNbixnY48PPiG80"
+        "Ref": "OtpDashgetDashlambdaLambdaVersionMjquJ6tFcaquERA4kk0GeDzA840gyEGGq3DrWULLji8"
       },
       "Export": {
         "Name": "sls-otp-friend-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"

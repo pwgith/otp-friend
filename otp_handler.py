@@ -7,6 +7,7 @@ import json
 import logging
 from otp_manager import OTPManager
 from otp_exceptions import OTPDataNotFound
+from helper import DecimalEncoder
 
 def is_valid_json(json_string):
     """Check if the json string is acutally valid json"""
@@ -32,22 +33,22 @@ def save_otp(event, context):
             
     if "requestContext" not in event or "requestId" not in event["requestContext"]:
         return {'statusCode': 400, 'body': 'Event is missing Request Id'}
-    request_id = event["requestContext"]["requestId"]
         
     otp = message
     try:
         otpManager = OTPManager()
         result = otpManager.save_otp(otp["otp_key"], otp["otp_data"])
-        return {'statusCode': 200, 'body': "OTP has been saved"}
+        return {'statusCode': 200, 'body': json.dumps("OTP has been saved", cls=DecimalEncoder)}
     except Exception as e:
         logging.exception("Error savibg OTP %s", str(e))        
-        return {'statusCode': 500, 'body': 'Was unable to save OTP in the database: ' + e.__str__()}
+        return {'statusCode': 500, 'body': json.dumps('Was unable to save OTP in the database: ' + e.__str__(), cls=DecimalEncoder)}
 
 def get_otp(event, context):
     """Process a request for test data"""
     if type(event) is not dict:
         return {'statusCode': 400, 'body': 'Event parameter is not a hash'}
-    otp_key = event['pathParameters']['otp_key']
+    print ("get values:", event)
+    otp_key = event['pathParameters']['key']
 
     try:
         otpManager = OTPManager()
@@ -56,8 +57,8 @@ def get_otp(event, context):
         return_body_json = json.dumps(return_body, cls=DecimalEncoder)
         return {'statusCode': 200, 'body': return_body_json}
     except OTPDataNotFound as e:
-        return {'statusCode': 404, 'body': e.__str__()}
+        return {'statusCode': 404, 'body': json.dumps(e.__str__(), cls=DecimalEncoder)}
     except Exception as e:
         logging.exception("Error getting request %s", str(e))        
-        return {'statusCode': 500, 'body': 'Was unable to store data in the database: ' + e.__str__()}
+        return {'statusCode': 500, 'body': json.dumps('Was unable to complete this get: ' + e.__str__(), cls=DecimalEncoder)}
 
