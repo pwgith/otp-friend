@@ -89,6 +89,12 @@
               "LogGroupName": "/aws/lambda/otp-friend-dev-otp-store-lambda"
             }
           },
+          "OtpDashstoreDashoktaDashlambdaLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/otp-friend-dev-otp-store-okta-lambda"
+            }
+          },
           "OtpDashgetDashlambdaLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -102,7 +108,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
               },
               "Handler": "otp_handler.save_otp",
               "Runtime": "python3.9",
@@ -126,6 +132,37 @@
               "OTPLambdaRole"
             ]
           },
+          "OtpDashstoreDashoktaDashlambdaLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
+              },
+              "Handler": "otp_handler.save_otp_okta",
+              "Runtime": "python3.9",
+              "FunctionName": "otp-friend-dev-otp-store-okta-lambda",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "PYTHONPATH": "./src"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "OTPLambdaRole",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "OtpDashstoreDashoktaDashlambdaLogGroup",
+              "OTPLambdaRole"
+            ]
+          },
           "OtpDashgetDashlambdaLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -133,7 +170,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z/otp-friend.zip"
               },
               "Handler": "otp_handler.get_otp",
               "Runtime": "python3.9",
@@ -157,24 +194,34 @@
               "OTPLambdaRole"
             ]
           },
-          "OtpDashstoreDashlambdaLambdaVersionqNB9JJy5ZTtS7Xz0EEQPPCEg2IkVRyJrP0GUdvp4aHU": {
+          "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashlambdaLambdaFunction"
               },
-              "CodeSha256": "/Hg7g7tR/1e+Od4tSBs2OdRoo81N5PzziYUxOtI7d1o="
+              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
             }
           },
-          "OtpDashgetDashlambdaLambdaVersionMjquJ6tFcaquERA4kk0GeDzA840gyEGGq3DrWULLji8": {
+          "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "OtpDashstoreDashoktaDashlambdaLambdaFunction"
+              },
+              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
+            }
+          },
+          "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashgetDashlambdaLambdaFunction"
               },
-              "CodeSha256": "/Hg7g7tR/1e+Od4tSBs2OdRoo81N5PzziYUxOtI7d1o="
+              "CodeSha256": "jZ3dhmDDzKGU2jumS1mvPJbwxYDfXd6DAfKnOHPox6E="
             }
           },
           "ApiGatewayRestApi": {
@@ -211,6 +258,21 @@
                 "Ref": "ApiGatewayResourceOtp"
               },
               "PathPart": "{key}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceOtpokta": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "otp_okta",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -268,6 +330,60 @@
             },
             "DependsOn": [
               "OtpDashstoreDashlambdaLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodOtpoktaPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceOtpokta"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "OtpDashstoreDashoktaDashlambdaLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayOtpfriendRequestValidator"
+              },
+              "RequestModels": {
+                "application/json": {
+                  "Ref": "ApiGatewayMethodOtpoktaPostApplicationJsonModel"
+                }
+              }
+            },
+            "DependsOn": [
+              "OtpDashstoreDashoktaDashlambdaLambdaPermissionApiGateway"
             ]
           },
           "ApiGatewayMethodOtpKeyVarGet": {
@@ -353,7 +469,33 @@
               }
             }
           },
-          "ApiGatewayDeployment1716103521865": {
+          "ApiGatewayMethodOtpoktaPostApplicationJsonModel": {
+            "Type": "AWS::ApiGateway::Model",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ContentType": "application/json",
+              "Schema": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "properties": {
+                  "otp_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "otp_data": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "otp_key",
+                  "otp_data"
+                ]
+              }
+            }
+          },
+          "ApiGatewayDeployment1716105607452": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -363,6 +505,7 @@
             },
             "DependsOn": [
               "ApiGatewayMethodOtpPost",
+              "ApiGatewayMethodOtpoktaPost",
               "ApiGatewayMethodOtpKeyVarGet"
             ]
           },
@@ -372,6 +515,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "OtpDashstoreDashlambdaLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "OtpDashstoreDashoktaDashlambdaLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "OtpDashstoreDashoktaDashlambdaLambdaFunction",
                   "Arn"
                 ]
               },
@@ -599,16 +779,25 @@
           "OtpDashstoreDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashlambdaLambdaVersionqNB9JJy5ZTtS7Xz0EEQPPCEg2IkVRyJrP0GUdvp4aHU"
+              "Ref": "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
             }
           },
+          "OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM"
+            },
+            "Export": {
+              "Name": "sls-otp-friend-dev-OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn"
+            }
+          },
           "OtpDashgetDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashgetDashlambdaLambdaVersionMjquJ6tFcaquERA4kk0GeDzA840gyEGGq3DrWULLji8"
+              "Ref": "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"
@@ -733,6 +922,9 @@
         }
       }
     },
+    "plugins": [
+      "serverless-plugin-scripts"
+    ],
     "pluginsData": {},
     "functions": {
       "otp-store-lambda": {
@@ -763,7 +955,37 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionqNB9JJy5ZTtS7Xz0EEQPPCEg2IkVRyJrP0GUdvp4aHU"
+        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionpAwKhOYY7YzLQ7NbQvYei9XRcWBgdWrqDRPs02MiL4"
+      },
+      "otp-store-okta-lambda": {
+        "handler": "otp_handler.save_otp_okta",
+        "environment": {
+          "PYTHONPATH": "./src"
+        },
+        "events": [
+          {
+            "http": {
+              "path": "otp_okta",
+              "method": "post",
+              "request": {
+                "schemas": {
+                  "application/json": {
+                    "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ApiGatewayMethodOtpoktaPostApplicationJsonModel\"][\"Properties\"][\"Schema\"]"
+                  }
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "role": "OTPLambdaRole",
+        "name": "otp-friend-dev-otp-store-okta-lambda",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "python3.9",
+        "vpc": {},
+        "versionLogicalId": "OtpDashstoreDashoktaDashlambdaLambdaVersionraSFJCTOx8eyCFuSOWyLNMOHY9HD2zJJRNzD8c0NgM"
       },
       "otp-get-lambda": {
         "handler": "otp_handler.get_otp",
@@ -786,7 +1008,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionMjquJ6tFcaquERA4kk0GeDzA840gyEGGq3DrWULLji8"
+        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionzHJgES8PpJKu5GuW0mGYrGGNERFCx1mgroo07BCuc"
       }
     },
     "resources": {
@@ -961,10 +1183,13 @@
         ],
         "artifactsS3KeyDirname": "serverless/otp-friend/dev/code-artifacts",
         "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip",
-        "artifactDirectoryName": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z"
+        "artifactDirectoryName": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
+      },
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
       }
     },
     "layers": {},
@@ -972,7 +1197,7 @@
     "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/otp-friend/dev/1716103523249-2024-05-19T07:25:23.249Z",
+    "artifactDirectoryName": "serverless/otp-friend/dev/1716105609449-2024-05-19T08:00:09.449Z",
     "artifact": "otp-friend.zip"
   }
 }

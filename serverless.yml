@@ -104,6 +104,18 @@ functions:
             schemas:
               application/json: ${file(models/model_otp_post.json)}
     role: OTPLambdaRole
+  otp-store-okta-lambda:
+    handler: otp_handler.save_otp_okta
+    environment:
+      PYTHONPATH: "./src"
+    events:
+      - http:
+          path: otp_okta
+          method: post
+          request:
+            schemas:
+              application/json: ${file(models/model_otp_okta_post.json)}
+    role: OTPLambdaRole
   otp-get-lambda:
     handler: otp_handler.get_otp
     environment:
@@ -126,3 +138,5 @@ custom:
     hooks:
       'deploy:finalize': karate/refresh_urls.sh
 
+plugins:
+  - serverless-plugin-scripts

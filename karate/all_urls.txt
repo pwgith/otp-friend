@@ -1,0 +1,3 @@
+  POST - https://bfef6ei42c.execute-api.ap-southeast-2.amazonaws.com/dev/otp
+  POST - https://bfef6ei42c.execute-api.ap-southeast-2.amazonaws.com/dev/otp_okta
+  GET - https://bfef6ei42c.execute-api.ap-southeast-2.amazonaws.com/dev/otp/{key}
