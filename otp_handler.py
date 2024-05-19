@@ -16,7 +16,7 @@ def is_valid_json(json_string):
     except ValueError:
         return False
 
-def store_otp(event, context):
+def save_otp(event, context):
     """Process a request for otp"""
     print("Event:", event)
     if type(event) is not dict:
@@ -37,13 +37,13 @@ def store_otp(event, context):
     otp = message
     try:
         otpManager = OTPManager()
-        result = otpManager.saveOTP(otp)
+        result = otpManager.save_otp(otp["otp_key"], otp["otp_data"])
         return {'statusCode': 200, 'body': "OTP has been saved"}
     except Exception as e:
         logging.exception("Error savibg OTP %s", str(e))        
         return {'statusCode': 500, 'body': 'Was unable to save OTP in the database: ' + e.__str__()}
 
-def retrieve_otp(event, context):
+def get_otp(event, context):
     """Process a request for test data"""
     if type(event) is not dict:
         return {'statusCode': 400, 'body': 'Event parameter is not a hash'}

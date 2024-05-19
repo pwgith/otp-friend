@@ -93,7 +93,7 @@ resources:
                   Resource: "arn:aws:logs:*:*:*" 
 functions:
   otp-store-lambda:
-    handler: otp_handler.store_otp
+    handler: otp_handler.save_otp
     environment:
       PYTHONPATH: "./src"
     events:
@@ -106,7 +106,7 @@ functions:
 
     role: OTPLambdaRole
   otp-get-lambda:
-    handler: otp_handler.retrieve_otp
+    handler: otp_handler.get_otp
     environment:
       PYTHONPATH: "./src"
     events:
