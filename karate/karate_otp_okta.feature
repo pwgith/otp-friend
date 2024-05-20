@@ -50,14 +50,14 @@ Scenario: Basic operations - post and get
     Then status 200
 
   Given url otp_get_url
-    And path "key1"
+    And path "9876543210"
     When method GET
     Then status 200  
     And match response == 
     """
     {
-      "otp_key": "key1", 
-      "otp_data": "data1" 
+      "otp_key": "9876543210", 
+      "otp_data": "11111" 
     }
     """
 
