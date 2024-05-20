@@ -104,6 +104,15 @@ functions:
             schemas:
               application/json: ${file(models/model_otp_post.json)}
     role: OTPLambdaRole
+  otp-store-email-lambda:
+    handler: otp_handler.save_otp_email
+    environment:
+      PYTHONPATH: "./src"
+    events:
+      - http:
+          path: otp/email
+          method: post
+    role: OTPLambdaRole
   otp-store-okta-lambda:
     handler: otp_handler.save_otp_okta
     environment:
