@@ -114,7 +114,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z/otp-friend.zip"
               },
               "Handler": "otp_handler.save_otp",
               "Runtime": "python3.9",
@@ -145,9 +145,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z/otp-friend.zip"
               },
-              "Handler": "otp_handler.save_otp_email",
+              "Handler": "otp_handler.save_otp_email_ses",
               "Runtime": "python3.9",
               "FunctionName": "otp-friend-dev-otp-store-email-lambda",
               "MemorySize": 1024,
@@ -176,7 +176,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z/otp-friend.zip"
               },
               "Handler": "otp_handler.save_otp_okta",
               "Runtime": "python3.9",
@@ -207,7 +207,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z/otp-friend.zip"
+                "S3Key": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z/otp-friend.zip"
               },
               "Handler": "otp_handler.get_otp",
               "Runtime": "python3.9",
@@ -231,44 +231,44 @@
               "OTPLambdaRole"
             ]
           },
-          "OtpDashstoreDashlambdaLambdaVersion2y99xWn6EmTl82OVHl1lM0aGR7MJHRkYaceMSJc20z4": {
+          "OtpDashstoreDashlambdaLambdaVersionMMq7XNhVi6JZwhu5ceaBa1ViOPAQWe7r7GQImjk2ZA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashlambdaLambdaFunction"
               },
-              "CodeSha256": "IolkJE/lNJCIZj43+jeZSEj/GwuagklGhWOkxZIn/OE="
+              "CodeSha256": "7B4w40rZdQaDQrPkc5VyOMJmbAXEShoCVrs41P/dwcw="
             }
           },
-          "OtpDashstoreDashemailDashlambdaLambdaVersionP9rQEmeuRWHmPFCq0OiL0fhiMZ5sAR8G7HBHDwkQ0": {
+          "OtpDashstoreDashemailDashlambdaLambdaVersionNT4AQndIGdSeYkhvpc9iASXnZkq1R3BacWrPpjEfo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashemailDashlambdaLambdaFunction"
               },
-              "CodeSha256": "IolkJE/lNJCIZj43+jeZSEj/GwuagklGhWOkxZIn/OE="
+              "CodeSha256": "7B4w40rZdQaDQrPkc5VyOMJmbAXEShoCVrs41P/dwcw="
             }
           },
-          "OtpDashstoreDashoktaDashlambdaLambdaVersionCYy8pPqy0SGxLevQOSYwcqKAgO6wqldduyHL5SG2llk": {
+          "OtpDashstoreDashoktaDashlambdaLambdaVersionKNxbesR2EkwVClOoNOsA5i9XD20OklH3QEPmugvUo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashstoreDashoktaDashlambdaLambdaFunction"
               },
-              "CodeSha256": "IolkJE/lNJCIZj43+jeZSEj/GwuagklGhWOkxZIn/OE="
+              "CodeSha256": "7B4w40rZdQaDQrPkc5VyOMJmbAXEShoCVrs41P/dwcw="
             }
           },
-          "OtpDashgetDashlambdaLambdaVersion2vzdwJoP3LMKu1jVSu17K0yM2XGPLNyAm1BtSwIcyYg": {
+          "OtpDashgetDashlambdaLambdaVersionN4udHx8dCRHeDaSCtcf9DiriDPMPKDI67g5LUxeOQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "OtpDashgetDashlambdaLambdaFunction"
               },
-              "CodeSha256": "IolkJE/lNJCIZj43+jeZSEj/GwuagklGhWOkxZIn/OE="
+              "CodeSha256": "7B4w40rZdQaDQrPkc5VyOMJmbAXEShoCVrs41P/dwcw="
             }
           },
           "ApiGatewayRestApi": {
@@ -615,7 +615,7 @@
               }
             }
           },
-          "ApiGatewayDeployment1716167973364": {
+          "ApiGatewayDeployment1716355324842": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -826,6 +826,16 @@
                       {
                         "Effect": "Allow",
                         "Action": [
+                          "s3:GetObject"
+                        ],
+                        "Resource": [
+                          "arn:aws:s3:::otpf-email-s3",
+                          "arn:aws:s3:::otpf-email-s3/*"
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
                           "dynamodb:PutItem",
                           "dynamodb:GetItem",
                           "dynamodb:UpdateItem",
@@ -937,7 +947,7 @@
           "OtpDashstoreDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashlambdaLambdaVersion2y99xWn6EmTl82OVHl1lM0aGR7MJHRkYaceMSJc20z4"
+              "Ref": "OtpDashstoreDashlambdaLambdaVersionMMq7XNhVi6JZwhu5ceaBa1ViOPAQWe7r7GQImjk2ZA"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashlambdaLambdaFunctionQualifiedArn"
@@ -946,7 +956,7 @@
           "OtpDashstoreDashemailDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashemailDashlambdaLambdaVersionP9rQEmeuRWHmPFCq0OiL0fhiMZ5sAR8G7HBHDwkQ0"
+              "Ref": "OtpDashstoreDashemailDashlambdaLambdaVersionNT4AQndIGdSeYkhvpc9iASXnZkq1R3BacWrPpjEfo"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashemailDashlambdaLambdaFunctionQualifiedArn"
@@ -955,7 +965,7 @@
           "OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashstoreDashoktaDashlambdaLambdaVersionCYy8pPqy0SGxLevQOSYwcqKAgO6wqldduyHL5SG2llk"
+              "Ref": "OtpDashstoreDashoktaDashlambdaLambdaVersionKNxbesR2EkwVClOoNOsA5i9XD20OklH3QEPmugvUo"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashstoreDashoktaDashlambdaLambdaFunctionQualifiedArn"
@@ -964,7 +974,7 @@
           "OtpDashgetDashlambdaLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "OtpDashgetDashlambdaLambdaVersion2vzdwJoP3LMKu1jVSu17K0yM2XGPLNyAm1BtSwIcyYg"
+              "Ref": "OtpDashgetDashlambdaLambdaVersionN4udHx8dCRHeDaSCtcf9DiriDPMPKDI67g5LUxeOQ"
             },
             "Export": {
               "Name": "sls-otp-friend-dev-OtpDashgetDashlambdaLambdaFunctionQualifiedArn"
@@ -1122,10 +1132,10 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersion2y99xWn6EmTl82OVHl1lM0aGR7MJHRkYaceMSJc20z4"
+        "versionLogicalId": "OtpDashstoreDashlambdaLambdaVersionMMq7XNhVi6JZwhu5ceaBa1ViOPAQWe7r7GQImjk2ZA"
       },
       "otp-store-email-lambda": {
-        "handler": "otp_handler.save_otp_email",
+        "handler": "otp_handler.save_otp_email_ses",
         "environment": {
           "PYTHONPATH": "./src"
         },
@@ -1145,7 +1155,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashemailDashlambdaLambdaVersionP9rQEmeuRWHmPFCq0OiL0fhiMZ5sAR8G7HBHDwkQ0"
+        "versionLogicalId": "OtpDashstoreDashemailDashlambdaLambdaVersionNT4AQndIGdSeYkhvpc9iASXnZkq1R3BacWrPpjEfo"
       },
       "otp-store-okta-lambda": {
         "handler": "otp_handler.save_otp_okta",
@@ -1175,7 +1185,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashstoreDashoktaDashlambdaLambdaVersionCYy8pPqy0SGxLevQOSYwcqKAgO6wqldduyHL5SG2llk"
+        "versionLogicalId": "OtpDashstoreDashoktaDashlambdaLambdaVersionKNxbesR2EkwVClOoNOsA5i9XD20OklH3QEPmugvUo"
       },
       "otp-get-lambda": {
         "handler": "otp_handler.get_otp",
@@ -1198,7 +1208,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersion2vzdwJoP3LMKu1jVSu17K0yM2XGPLNyAm1BtSwIcyYg"
+        "versionLogicalId": "OtpDashgetDashlambdaLambdaVersionN4udHx8dCRHeDaSCtcf9DiriDPMPKDI67g5LUxeOQ"
       }
     },
     "resources": {
@@ -1248,6 +1258,16 @@
                 "PolicyDocument": {
                   "Version": "2012-10-17",
                   "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "s3:GetObject"
+                      ],
+                      "Resource": [
+                        "arn:aws:s3:::otpf-email-s3",
+                        "arn:aws:s3:::otpf-email-s3/*"
+                      ]
+                    },
                     {
                       "Effect": "Allow",
                       "Action": [
@@ -1373,7 +1393,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/otp-friend/dev/code-artifacts",
         "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip",
-        "artifactDirectoryName": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z"
+        "artifactDirectoryName": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
@@ -1387,7 +1407,7 @@
     "artifact": "/workspaces/otp-friend/.serverless/otp-friend.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/otp-friend/dev/1716167980506-2024-05-20T01:19:40.506Z",
+    "artifactDirectoryName": "serverless/otp-friend/dev/1716355329176-2024-05-22T05:22:09.176Z",
     "artifact": "otp-friend.zip"
   }
 }
